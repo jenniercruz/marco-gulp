@@ -1,0 +1,46 @@
+{
+  "name": "marco-gulp",
+  "version": "1.0.0",
+  "description": "front-end development enviroment made with gulp",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "gulp test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jenniercruz/marco-gulp.git"
+  },
+  "keywords": [
+    "front-end",
+    "enviroment",
+    "gulp",
+    "task",
+    "manager",
+    "sass",
+    "cssmin",
+    "concat",
+    "uglify",
+    "devServer",
+    "livereload",
+    "es6",
+    "imagemin"
+  ],
+  "author": "jenniercruz90@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jenniercruz/marco-gulp/issues"
+  },
+  "homepage": "https://github.com/jenniercruz/marco-gulp#readme",
+  "devDependencies": {
+    "babel-preset-es2015": "latest",
+    "browser-sync": "latest",
+    "gulp": "latest",
+    "gulp-babel": "latest",
+    "gulp-concat": "latest",
+    "gulp-iife": "latest",
+    "gulp-sass": "latest",
+    "gulp-sourcemaps": "latest",
+    "gulp-uglify": "latest",
+    "pump": "latest"
+  }
+}
