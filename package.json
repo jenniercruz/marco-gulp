@@ -37,6 +37,7 @@
     "gulp": "latest",
     "gulp-babel": "latest",
     "gulp-concat": "latest",
+    "gulp-connect-php": "latest",
     "gulp-iife": "latest",
     "gulp-sass": "latest",
     "gulp-sourcemaps": "latest",

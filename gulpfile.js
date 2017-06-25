@@ -8,7 +8,8 @@ var uglify = require('gulp-uglify');
 var babel = require('gulp-babel');
 var pump = require('pump');
 var sourcemaps = require('gulp-sourcemaps');
-var browserSync = require('browser-sync').create();
+var connect = require('gulp-connect-php');
+var browserSync = require('browser-sync');
 
 gulp.task('sass', function () {
  return gulp.src('./src/sass/**/*.scss')
@@ -36,16 +37,20 @@ gulp.task('js', function (cb) {
   );
 });
 
-gulp.task('browser-sync', function() {
-    browserSync.init({
-        port: 7000,
-        server: {
-            baseDir: "./public"
-        }
+gulp.task('connect-sync', function() {
+  connect.server({
+    hostname: '127.0.0.1',
+    port: 5000,
+    base: './public'
+  }, function (){
+    browserSync({
+      proxy: '127.0.0.1:5000',
+      port: 7000
     });
+  });
 });
 
-gulp.task('default', ['browser-sync'], function () {
+gulp.task('default', ['connect-sync'], function () {
   gulp.watch('./src/sass/**/*.scss', ['sass']);
   gulp.watch('./src/js/**/*.js', ['js']);
   gulp.watch('./public/**/*.*').on('change', browserSync.reload);
