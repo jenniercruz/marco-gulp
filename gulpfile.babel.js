@@ -1,17 +1,17 @@
 'use strict';
 
-var gulp = require('gulp');
-var sass = require('gulp-sass');
-var iife = require("gulp-iife");
-var concat = require("gulp-concat");
-var uglify = require('gulp-uglify');
-var babel = require('gulp-babel');
-var pump = require('pump');
-var sourcemaps = require('gulp-sourcemaps');
-var connect = require('gulp-connect-php');
-var browserSync = require('browser-sync');
+import gulp from 'gulp';
+import sass from 'gulp-sass';
+import iife from "gulp-iife";
+import concat from "gulp-concat";
+import uglify from 'gulp-uglify';
+import babel from 'gulp-babel';
+import pump from 'pump';
+import sourcemaps from 'gulp-sourcemaps';
+import connect from 'gulp-connect-php';
+import browserSync from 'browser-sync';
 
-gulp.task('sass', function () {
+gulp.task('sass', () => {
  return gulp.src('./src/sass/**/*.scss')
    .pipe(sourcemaps.init())
    .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
@@ -20,14 +20,12 @@ gulp.task('sass', function () {
 });
 
 
-gulp.task('js', function (cb) {
+gulp.task('js', (cb) => {
   pump([
         gulp.src(['src/js/modules/*.module.js', 'src/js/*.js', 'src/js/**/*.js']),
         sourcemaps.init(),
         iife(),
-        babel({
-          presets: ['es2015']
-        }),
+        babel(),
         concat('script.min.js'),
         uglify(),
         sourcemaps.write('.'),
@@ -37,12 +35,12 @@ gulp.task('js', function (cb) {
   );
 });
 
-gulp.task('connect-sync', function() {
+gulp.task('connect-sync', () => {
   connect.server({
     hostname: '127.0.0.1',
     port: 5000,
     base: './public'
-  }, function (){
+  }, () => {
     browserSync({
       proxy: '127.0.0.1:5000',
       port: 7000
@@ -50,7 +48,7 @@ gulp.task('connect-sync', function() {
   });
 });
 
-gulp.task('default', ['connect-sync'], function () {
+gulp.task('default', ['connect-sync'], () => {
   gulp.watch('./src/sass/**/*.scss', ['sass']);
   gulp.watch('./src/js/**/*.js', ['js']);
   gulp.watch('./public/**/*.*').on('change', browserSync.reload);
