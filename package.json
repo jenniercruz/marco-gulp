@@ -32,6 +32,9 @@
   },
   "homepage": "https://github.com/jenniercruz/marco-gulp#readme",
   "devDependencies": {
+    "babel": "^6.23.0",
+    "babel-core": "^6.25.0",
+    "babel-preset-env": "^1.5.2",
     "babel-preset-es2015": "latest",
     "browser-sync": "latest",
     "gulp": "latest",
