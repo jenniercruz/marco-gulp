@@ -14,33 +14,34 @@ import browserSync from 'browser-sync';
 import gutil from "gulp-util";
 
 gulp.task('sass', () => {
- return gulp.src('./src/sass/**/*.scss')
-   .pipe(sourcemaps.init())
-   .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
-   .pipe(sourcemaps.write('./'))
-   .pipe(gulp.dest('./public/res/css'));
+  pump([
+    gulp.src('./src/sass/**/*.scss'),
+    sourcemaps.init(),
+    sass({outputStyle: 'compressed'}).on('error', sass.logError),
+    sourcemaps.write('./'),
+    gulp.dest('./public/res/css')
+  ])
 });
 
 gulp.task('js', () => {
   pump([
-        browserify({
-          entries: './src/js/main.js',
-          debug: true
-        })
-        .transform(babelify)
-        .bundle().on('error', err => {
-          gutil.log("!!Browserify Error: ", gutil.colors.red(err.message))
-        }),
-        source('script.min.js'),
-        buffer(),
-        sourcemaps.init({loadMaps: true}),
-        uglify().on('error', err => {
-          gutil.log("!!Uglify Error: ", gutil.colors.red(err.message))
-        }),
-        sourcemaps.write('.'),
-        gulp.dest('./public/res/js'),
-    ]
-  );
+    browserify({
+      entries: './src/js/main.js',
+      debug: true
+    })
+    .transform(babelify)
+    .bundle().on('error', err => {
+      gutil.log("!!Browserify Error: ", gutil.colors.red(err.message))
+    }),
+    source('script.min.js'),
+    buffer(),
+    sourcemaps.init({loadMaps: true}),
+    uglify().on('error', err => {
+      gutil.log("!!Uglify Error: ", gutil.colors.red(err.message))
+    }),
+    sourcemaps.write('.'),
+    gulp.dest('./public/res/js'),
+  ]);
 });
 
 gulp.task('connect-sync', () => {
