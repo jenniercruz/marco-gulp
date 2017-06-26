@@ -2,14 +2,16 @@
 
 import gulp from 'gulp';
 import sass from 'gulp-sass';
-import iife from "gulp-iife";
-import concat from "gulp-concat";
+import browserify from 'browserify';
+import babelify from 'babelify';
+import buffer from 'vinyl-buffer';
+import source from 'vinyl-source-stream';
 import uglify from 'gulp-uglify';
-import babel from 'gulp-babel';
 import pump from 'pump';
 import sourcemaps from 'gulp-sourcemaps';
 import connect from 'gulp-connect-php';
 import browserSync from 'browser-sync';
+import gutil from "gulp-util";
 
 gulp.task('sass', () => {
  return gulp.src('./src/sass/**/*.scss')
@@ -19,19 +21,25 @@ gulp.task('sass', () => {
    .pipe(gulp.dest('./public/res/css'));
 });
 
-
-gulp.task('js', (cb) => {
+gulp.task('js', () => {
   pump([
-        gulp.src(['src/js/modules/*.module.js', 'src/js/*.js', 'src/js/**/*.js']),
-        sourcemaps.init(),
-        iife(),
-        babel(),
-        concat('script.min.js'),
-        uglify(),
+        browserify({
+          entries: './src/js/main.js',
+          debug: true
+        })
+        .transform(babelify)
+        .bundle().on('error', err => {
+          gutil.log("!!Browserify Error: ", gutil.colors.red(err.message))
+        }),
+        source('script.min.js'),
+        buffer(),
+        sourcemaps.init({loadMaps: true}),
+        uglify().on('error', err => {
+          gutil.log("!!Uglify Error: ", gutil.colors.red(err.message))
+        }),
         sourcemaps.write('.'),
-        gulp.dest('./public/res/js')
-    ],
-    cb
+        gulp.dest('./public/res/js'),
+    ]
   );
 });
 

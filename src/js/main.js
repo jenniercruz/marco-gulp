@@ -1,5 +1,5 @@
-//import modulo from './modulos/module';
+import modulo from './modules/module';
 
 let message = (msg) => { return `Hello ${msg}!!`; };
 
-console.log( message("World") );
+console.log( message(modulo.prop) );
