@@ -1,3 +1,4 @@
-/*export const modulo = {
-    nombre: "Jennier"
-}*/
+const modulo = {
+    prop: "World"
+}
+export default modulo;
